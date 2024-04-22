@@ -23,6 +23,7 @@
                 <th scope="col">@Html.DisplayNameFor(m => m.Nombre)</th>
                 <th scope="col">@Html.DisplayNameFor(m => m.Telefono)</th>
                 <th scope="col">@Html.DisplayNameFor(m => m.Correo)</th>
+                <th scope="col">@Html.DisplayNameFor(m => m.Cargo)</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -34,6 +35,7 @@
                     <td>@Html.DisplayFor(m => contacto.Nombre)</td>
                     <td>@Html.DisplayFor(m => contacto.Telefono)</td>
                     <td>@Html.DisplayFor(m => contacto.Correo)</td>
+                    <td>@Html.DisplayFor(m => contacto.Cargo)</td>
                     <td style="display:flex">
                         <a class="" asp-action="Editar" asp-route-id="@contacto.IdContacto">
                             <button style="margin-right:4px" type="button" class="btn btn-primary">
@@ -95,8 +97,10 @@
                                     'Eliminado!',
                                     'Tu elemento ha sido eliminado.',
                                     'success'
-                                );
-                                $('#tablaRegistros').html(response);
+                                ).then(() => {
+                                    location.reload();
+                                });
+                               
                             },
                             error: function () {
                                 Swal.fire(

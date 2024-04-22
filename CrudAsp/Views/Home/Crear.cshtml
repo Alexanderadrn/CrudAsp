@@ -1,4 +1,5 @@
 ﻿@model CrudAsp.DTO.ContactoDTO
+ 
 @{
     ViewData["Title"] = "Lista de Contactos";
     
@@ -22,6 +23,18 @@
     <input asp-for="Correo" type="email" class="form-control" id="inputAddress" placeholder="Correo" required>
     <span asp-validation-for="Correo" class="text-danger"></span>
     </div>
+        <div class="form-group col-md-6">
+            <label asp-for="IdCargo">Cargo</label>
+            <select asp-for="IdCargo" class="form-control" required>
+                <option value="">Seleccionar Cargo</option>
+                @foreach (var cargo in ViewBag.Cargos)
+                {
+                    <option value="@cargo.Value">@cargo.Text</option>
+                }
+            </select>
+            <span asp-validation-for="IdCargo" class="text-danger"></span>
+        </div>
+
     </div>
     <div style="display:flex; margin-top:1rem ">
     <button type="submit" class="btn btn-success">

@@ -14,5 +14,13 @@ namespace CrudAsp.DTO
         [Required(ErrorMessage = "El campo es obligarorio")]
 
         public string? Correo { get; set; }
+            
+       
+
+        public string? Cargo { get; set; }
+        [Required(ErrorMessage = "El campo es obligarorio")]
+        public int IdCargo { get; set; }
+
+
     }
 }

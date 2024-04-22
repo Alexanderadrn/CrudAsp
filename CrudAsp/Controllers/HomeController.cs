@@ -1,6 +1,7 @@
 using CrudAsp.DTO;
 using CrudAsp.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
@@ -18,35 +19,58 @@ namespace CrudAsp.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var contactos = await _context.Contactos.ToListAsync();
-            var contactoDto = contactos                
-                .Select(contacto => new ContactoDTO
+
+            var contactos = await (
+                from contacto in _context.Contactos
+                join cargo in _context.Cargos on contacto.IdCargo equals cargo.IdCargo
+                select new ContactoDTO
                 {
                     IdContacto = contacto.IdContacto,
                     Nombre = contacto.Nombre,
                     Correo = contacto.Correo,
-                    Telefono = contacto.Telefono
-                }).ToList();        
+                    Telefono = contacto.Telefono,
+                    Cargo = cargo.NombreCargo
+                }
+                ).ToListAsync();
+            //var contactos = await _context.Contactos.ToListAsync();
+
+            //var contactoDto = contactos                
+            //    .Select(contacto => new ContactoDTO
+            //    {
+            //        IdContacto = contacto.IdContacto,
+            //        Nombre = contacto.Nombre,
+            //        Correo = contacto.Correo,
+            //        Telefono = contacto.Telefono
+            //    }).ToList();        
         
 
-            return View(contactoDto);
+            return View(contactos);
         }
         [HttpGet]
         public IActionResult Crear()
         {
+            var cargos = _context.Cargos.ToList();
+            SelectList listaCargos = new SelectList(cargos, "IdCargo", "NombreCargo");
+            ViewBag.Cargos = listaCargos;
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Crear(ContactoDTO contacto)
         {
+            var cargos = _context.Cargos.ToList();
+            SelectList listaCargos = new SelectList(cargos, "IdCargo", "NombreCargo");
+            ViewBag.Cargos = listaCargos;
+
             if (ModelState.IsValid)
             {
                 var nuevoContacto = new Contacto
                 {
                     Nombre = contacto.Nombre,
                     Telefono = contacto.Telefono,
-                    Correo = contacto.Correo
+                    Correo = contacto.Correo,
+                    IdCargo=contacto.IdCargo
+                   
                 };
                 _context.Contactos.Add(nuevoContacto);
                 await _context.SaveChangesAsync();
@@ -104,8 +128,7 @@ namespace CrudAsp.Controllers
             {
                 _context.Contactos.Remove(contactoExistente);
                 _context.SaveChanges();
-                var registrosActualizados = Index();
-                return PartialView("_TablaRegistros", registrosActualizados);
+                return RedirectToAction(nameof(Index));
 
             }
             catch

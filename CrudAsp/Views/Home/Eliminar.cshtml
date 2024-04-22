@@ -1,0 +1,71 @@
+﻿@model CrudAsp.DTO.ContactoDTO
+@{
+    ViewData["Title"] = "Eliminar Contactos";
+}
+<button type="button" class="btn btn-primary" id="btnAbrirModal">Abrir Modal</button>
+
+<!-- Modal -->
+<div class="modal fade" id="miModal" tabindex="-1" role="dialog" aria-labelledby="miModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="miModalLabel">Título del Modal</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>hola mundo</p>
+                <!-- Aquí cargaremos la vista en el modal -->
+                <div id="contenedorVista"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* <div class="row">
+</div>
+<div>
+    <div class="row">
+        <div>
+            <div>
+                <h3><strong>Editar de Contactos</strong></h3>
+            </div>
+            <div class="card-body">
+                <form asp-action="Borrar">
+                    <!--
+                        Id del usuario como campo oculto
+                    -->
+                    <input type="hidden" asp-for="IdContacto" />
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <div class="form-group">
+                        <label asp-for="Nombre"></label>
+                        <input asp-for="Nombre" readonly />
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Telefono"></label>
+                        <input asp-for="Telefono" readonly />
+                        <span asp-validation-for="Telefono" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Correo"></label>
+                        <input asp-for="Correo" readonly />
+                        <span asp-validation-for="Correo" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <button type="submit" class="btn btn-primary d-block mx-auto"><i class="bi bi-pencil fill"></i>Borrar Usuario</button>
+                    </div>
+                </form>
+                <a asp-asp-controller="Home" asp-action="Index">Volver</a>
+
+            </div>
+
+        </div>
+    </div>
+</div> *@
+
+
